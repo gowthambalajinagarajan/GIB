@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -40,7 +41,7 @@ public class BasePage {
 			driver.manage().window().maximize();
 			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 			//driver.get("https://www.flipkart.com/");
-			driver.navigate().to("http://14.99.9.58:7005/vTransactAdminPortalRCD/login");
+			driver.navigate().to("http://14.99.9.58:7005/eCollectIMRAdminPortal/login");
 		}
 	}
 	
@@ -72,7 +73,22 @@ public class BasePage {
 		obj.selectByValue(option);
 		return obj.getFirstSelectedOption().getText();
 	}
+	
+	public void  scrollDown(WebElement element) {
+		JavascriptExecutor js=(JavascriptExecutor)driver;
+		js.executeScript("arguments[0].scrollIntoView(true)",element);
+	}
+	
+	public void  scrollUp(WebElement element) {
+		JavascriptExecutor js=(JavascriptExecutor)driver;
+		js.executeScript("arguments[0].scrollIntoView(false)",element);
+	}
 
+	public void dropDownIndex(WebElement element,int index) {
+		Select a=new Select(element);
+		a.selectByIndex(index);
+	}
+	
 	public boolean isElementVisible(WebElement element) {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, 90);
