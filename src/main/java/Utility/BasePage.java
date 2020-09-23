@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -23,6 +24,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.aventstack.extentreports.utils.FileUtil;
+
 public class BasePage {
 
 	public static WebDriver driver;
@@ -40,12 +43,10 @@ public class BasePage {
 			}
 			driver.manage().window().maximize();
 			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-			//driver.get("https://www.flipkart.com/");
 			driver.navigate().to("http://14.99.9.58:7005/eCollectIMRAdminPortal/login");
 		}
 	}
 	
-
 	public boolean elementFound(WebElement element) {
 		boolean res = false;
 		try {
@@ -68,6 +69,17 @@ public class BasePage {
 		return element.getAttribute("value");
 	}
 
+	public void screenShot() throws Throwable {
+		Date d = new Date();
+		@SuppressWarnings("deprecation")
+		int e = d.getSeconds();
+	TakesScreenshot ts =  (TakesScreenshot)driver;	
+	File source = ts.getScreenshotAs(OutputType.FILE);
+	File dest = new File(".//ScreenShots//mgs"+e+".png");
+	FileHandler.copy(source, dest);
+	}
+	
+	
 	public String selectFromDropDown(WebElement element, String option) {
 		Select obj = new Select(element);
 		obj.selectByValue(option);
